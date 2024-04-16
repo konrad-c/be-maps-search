@@ -1,12 +1,12 @@
+import { configuration } from './config'
 import { getPlaceAutocomplete } from './maps-api'
+import { Address } from './model'
 
-export async function getAutoCompleteDetails(address: any): Promise<any> {
-    const apiKey = process.env.TOMTOM_API_KEY;
-    // get autocomplete results
-    const res = getPlaceAutocomplete(process.env.TOMTOM_API_KEY, address).then(async (autocompleteResults) => {
-        const res = []
-        return res
-    })
-    // loop over and get details and map results
-    return res
+export async function getAutoCompleteDetails(address: string): Promise<Address[]> {
+    const { TOMTOM_API_KEY } = configuration()
+    if (!isValidAddress(address)) return []
+    // Query address API with provided partial address
+    return await getPlaceAutocomplete({ tomtomApiKey: TOMTOM_API_KEY, address })
 }
+
+const isValidAddress = (address: string) => address.length > 0

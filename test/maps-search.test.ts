@@ -3,7 +3,9 @@ import { describe } from '@jest/globals'
 import { getPlaceAutocomplete } from '../src/maps-api'
 import { getAutoCompleteDetails } from '../src'
 
-config();
+config()
+
+const tomtomApiKey: string = process.env.TOMTOM_API_KEY ?? ''
 
 // These are end-to-end tests and need an api key
 describe('Tomtom Places E2E Tests', () => {
@@ -18,6 +20,8 @@ describe('Tomtom Places E2E Tests', () => {
             const firstRes = res[0];
             expect(firstRes).toHaveProperty('placeId')
             expect(firstRes).toHaveProperty('streetNumber')
+            expect(firstRes).toHaveProperty('streetName')
+            expect(firstRes).toHaveProperty('state')
             expect(firstRes).toHaveProperty('countryCode')
             expect(firstRes).toHaveProperty('country')
             expect(firstRes).toHaveProperty('freeformAddress')
@@ -28,12 +32,12 @@ describe('Tomtom Places E2E Tests', () => {
     describe('getPlaceAutocomplete', () => {
 
         it('handles no results', async () => {
-            const res = await getPlaceAutocomplete(process.env.TOMTOM_API_KEY, 'asfasffasfasafsafs');
+            const res = await getPlaceAutocomplete({ tomtomApiKey, address: 'asfasffasfasafsafs' })
             expect(res).toStrictEqual([])
         })
 
         it('handles error', async () => {
-            expect(getPlaceAutocomplete(process.env.TOMTOM_API_KEY, '')).rejects.toThrow()
+            expect(getPlaceAutocomplete({ tomtomApiKey, address: '' })).rejects.toThrow()
         })
     })
 
