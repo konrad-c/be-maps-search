@@ -36,8 +36,25 @@ describe('Tomtom Places E2E Tests', () => {
             expect(res).toStrictEqual([])
         })
 
+        
         it('handles error', async () => {
             expect(queryPlaceAutocompleteApi({ tomtomApiKey, address: '' })).rejects.toThrow()
+        })
+
+        describe("specifying included countries", () => {
+            it('handles specifying included countries', async () => {
+                const res = await queryPlaceAutocompleteApi({ tomtomApiKey, address: 'Boulder', countryCodesIncluded: ["CA"] })
+                const countryCodes = new Set(res.map(a => a.countryCode))
+                expect(countryCodes.size).toEqual(1)
+                expect(countryCodes).toContain("CA")
+            })
+
+            it('defaults to AU if unspecified', async () => {
+                const res = await queryPlaceAutocompleteApi({ tomtomApiKey, address: 'Boulder' })
+                const countryCodes = new Set(res.map(a => a.countryCode))
+                expect(countryCodes.size).toEqual(1)
+                expect(countryCodes).toContain("AU")
+            })
         })
     })
 

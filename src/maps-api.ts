@@ -4,6 +4,7 @@ import { Address } from './model'
 export interface QueryPlaceAutocompleteApiRequest {
     tomtomApiKey: string
     address: string
+    countryCodesIncluded?: string[]
 }
 
 /**
@@ -12,11 +13,12 @@ export interface QueryPlaceAutocompleteApiRequest {
  * @param address Partial address with which to search
  * @returns List of addresses 
  */
-export async function queryPlaceAutocompleteApi({tomtomApiKey, address}: QueryPlaceAutocompleteApiRequest): Promise<Address[]> {
+export async function queryPlaceAutocompleteApi({tomtomApiKey, address, countryCodesIncluded }: QueryPlaceAutocompleteApiRequest): Promise<Address[]> {
     const response = await axios.get<AutocompleteResponse>(`https://api.tomtom.com/search/2/search/${address}.json'`, {
         params: {
             key: tomtomApiKey,
             limit: 100,
+            countrySet: (countryCodesIncluded ?? ["AU"]).join(',')
         }
     })
 
