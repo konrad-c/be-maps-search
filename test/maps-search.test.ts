@@ -1,6 +1,6 @@
 import { config } from 'dotenv'
 import { describe } from '@jest/globals'
-import { getPlaceAutocomplete } from '../src/maps-api'
+import { queryPlaceAutocompleteApi } from '../src/maps-api'
 import { getAutoCompleteDetails } from '../src'
 
 config()
@@ -29,15 +29,15 @@ describe('Tomtom Places E2E Tests', () => {
         })
     })
 
-    describe('getPlaceAutocomplete', () => {
+    describe('queryPlaceAutocompleteApi', () => {
 
         it('handles no results', async () => {
-            const res = await getPlaceAutocomplete({ tomtomApiKey, address: 'asfasffasfasafsafs' })
+            const res = await queryPlaceAutocompleteApi({ tomtomApiKey, address: 'asfasffasfasafsafs' })
             expect(res).toStrictEqual([])
         })
 
         it('handles error', async () => {
-            expect(getPlaceAutocomplete({ tomtomApiKey, address: '' })).rejects.toThrow()
+            expect(queryPlaceAutocompleteApi({ tomtomApiKey, address: '' })).rejects.toThrow()
         })
     })
 

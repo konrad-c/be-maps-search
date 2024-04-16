@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Address } from './model'
 
-export interface GetPlaceAutocompleteRequest {
+export interface QueryPlaceAutocompleteApiRequest {
     tomtomApiKey: string
     address: string
 }
@@ -12,7 +12,7 @@ export interface GetPlaceAutocompleteRequest {
  * @param address Partial address with which to search
  * @returns List of addresses 
  */
-export async function getPlaceAutocomplete({tomtomApiKey, address}: GetPlaceAutocompleteRequest): Promise<Address[]> {
+export async function queryPlaceAutocompleteApi({tomtomApiKey, address}: QueryPlaceAutocompleteApiRequest): Promise<Address[]> {
     const response = await axios.get<AutocompleteResponse>(`https://api.tomtom.com/search/2/search/${address}.json'`, {
         params: {
             key: tomtomApiKey,
@@ -31,7 +31,7 @@ const toAddress = ({ id, address }: AutocompleteAddress): Address => ({
     municipality: address.freeformAddress,
     streetNumber: address.streetNumber,
     streetName: address.streetName,
-    state: address.countrySubdivision
+    state: address.countrySubdivision,
 })
 
 interface AutocompleteResponse {
