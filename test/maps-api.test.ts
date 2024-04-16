@@ -30,8 +30,8 @@ describe('Tomtom Places API', () => {
             })
 
             const res = await queryPlaceAutocompleteApi({ tomtomApiKey: 'test-api-key', address: 'Charlotte Street' })
-            expect(res).toHaveLength(1)
-            expect(res[0]).toStrictEqual({
+            expect(res.addresses).toHaveLength(1)
+            expect(res.addresses[0]).toStrictEqual({
                 placeId: 'place-id', 
                 country: 'Australia',
                 countryCode: 'AU',

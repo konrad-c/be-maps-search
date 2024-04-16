@@ -7,13 +7,17 @@ export interface QueryPlaceAutocompleteApiRequest {
     countryCodesIncluded?: string[]
 }
 
+export interface QueryPlaceAutocompleteApiResponse {
+    addresses: Address[]
+}
+
 /**
  * Query the 'tomtom' fuzzy address search API for autocomplete suggestions for a provided address
  * @param tomtomApiKey API key for the TOMTOM fuzzy search API
  * @param address Partial address with which to search
  * @returns List of addresses 
  */
-export async function queryPlaceAutocompleteApi({tomtomApiKey, address, countryCodesIncluded }: QueryPlaceAutocompleteApiRequest): Promise<Address[]> {
+export async function queryPlaceAutocompleteApi({tomtomApiKey, address, countryCodesIncluded }: QueryPlaceAutocompleteApiRequest): Promise<QueryPlaceAutocompleteApiResponse> {
     const response = await axios.get<AutocompleteResponse>(`https://api.tomtom.com/search/2/search/${address}.json'`, {
         params: {
             key: tomtomApiKey,
@@ -22,7 +26,9 @@ export async function queryPlaceAutocompleteApi({tomtomApiKey, address, countryC
         }
     })
 
-    return response.data.results.map(toAddress)
+    return {
+        addresses: response.data.results.map(toAddress)
+    }
 }
 
 const toAddress = ({ id, address }: AutocompleteAddress): Address => ({
@@ -43,16 +49,14 @@ interface AutocompleteResponse {
 
 interface AutocompleteAddress {
     id: string
-    address: AutoCompleteAddressDetail
-}
-
-interface AutoCompleteAddressDetail {
-    streetNumber: string
-    streetName: string
-    municipality: string
-    country: string
-    countryCode: string
-    freeformAddress: string
-    postalCode: string
-    countrySubdivision: string
+    address: {
+        streetNumber: string
+        streetName: string
+        municipality: string
+        country: string
+        countryCode: string
+        freeformAddress: string
+        postalCode: string
+        countrySubdivision: string
+    }
 }
