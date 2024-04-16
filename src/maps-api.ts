@@ -18,7 +18,7 @@ export async function queryPlaceAutocompleteApi({tomtomApiKey, address, countryC
         params: {
             key: tomtomApiKey,
             limit: 100,
-            countrySet: (countryCodesIncluded ?? ["AU"]).join(',')
+            countrySet: (countryCodesIncluded ?? ["AU"]).join(','),
         }
     })
 
@@ -30,10 +30,11 @@ const toAddress = ({ id, address }: AutocompleteAddress): Address => ({
     country: address.country,
     countryCode: address.countryCode,
     freeformAddress: address.freeformAddress,
-    municipality: address.freeformAddress,
+    municipality: address.municipality,
     streetNumber: address.streetNumber,
     streetName: address.streetName,
     state: address.countrySubdivision,
+    postalCode: address.postalCode,
 })
 
 interface AutocompleteResponse {
@@ -43,7 +44,6 @@ interface AutocompleteResponse {
 interface AutocompleteAddress {
     id: string
     address: AutoCompleteAddressDetail
-    
 }
 
 interface AutoCompleteAddressDetail {

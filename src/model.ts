@@ -7,4 +7,5 @@ export interface Address {
     freeformAddress: string
     municipality: string
     state: string
+    postalCode: string
 }
