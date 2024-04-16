@@ -19,6 +19,13 @@ Resources:
 Place Search Documentation: https://developer.tomtom.com/search-api/documentation/search-service/search-service
 API Key: Oyb0npJAVdRwDauqpFez7zKCy2euUYql
 
+
+Environment setup:
+========
+1. cp .env.example .env
+2. Update `TOMTOM_API_KEY` value with API key specified above.
+
+
 Install:
 ========
 1. yarn install
