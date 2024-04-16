@@ -11,13 +11,13 @@ const tomtomApiKey: string = process.env.TOMTOM_API_KEY ?? ''
 describe('Tomtom Places E2E Tests', () => {
     describe('getAutoCompleteDetails', () => {
         it ('returns a promise', () => {
-            const res = getAutoCompleteDetails('Charlotte Street')
+            const res = getAutoCompleteDetails({ address: 'Charlotte Street'})
             expect(res).toBeInstanceOf(Promise)
         })
 
         it('can fetch from the autocomplete api', async () => {
-            const res = await getAutoCompleteDetails('Charlotte Street')
-            const firstRes = res[0];
+            const res = await getAutoCompleteDetails({ address: 'Charlotte Street'})
+            const firstRes = res.addresses[0];
             expect(firstRes).toHaveProperty('placeId')
             expect(firstRes).toHaveProperty('streetNumber')
             expect(firstRes).toHaveProperty('streetName')
