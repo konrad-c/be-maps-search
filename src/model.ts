@@ -1,4 +1,5 @@
 export interface Address {
+    /** Unique string identifier for this address */
     placeId: string
     streetNumber: string
     streetName: string
@@ -7,5 +8,5 @@ export interface Address {
     freeformAddress: string
     municipality: string
     state: string
-    postalCode: string
+    postalCode?: string
 }

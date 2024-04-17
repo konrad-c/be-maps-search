@@ -22,7 +22,7 @@ API Key: Oyb0npJAVdRwDauqpFez7zKCy2euUYql
 
 Environment setup:
 ========
-1. cp .env.example .env
+1. `cp .env.example .env`
 2. Update `TOMTOM_API_KEY` value with API key specified above.
 
 

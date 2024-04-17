@@ -57,6 +57,18 @@ describe('Tomtom Places E2E Tests', () => {
                 expect(countryCodes).toContain("AU")
             })
         })
+
+        describe("specifying limit", () => {
+            it('defaults to 100 if no limit provided', async () => {
+                const res = await queryPlaceAutocompleteApi({ tomtomApiKey, address: 'Charlotte Street' })
+                expect(res.addresses).toHaveLength(100)
+            })
+
+            it('handles specified limit', async () => {
+                const res = await queryPlaceAutocompleteApi({ tomtomApiKey, address: 'Charlotte Street', limit: 15 })
+                expect(res.addresses).toHaveLength(15)
+            })
+        })
     })
 
 })
